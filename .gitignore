@@ -1,0 +1,41 @@
+# ==============================================================================
+#  NetWatch Enterprise — fichiers à ne jamais versionner
+# ==============================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- DONNÉES & SECRETS (critique : ne doivent JAMAIS partir dans un dépôt) ---
+# Contient secret.key (clé de session), known_devices.json, alerts.json,
+# le journal d'audit, etc.
+data/
+data_demo/
+*.log
+
+# --- Node / build du front (régénérables via `npm install && npm run build`) ---
+frontend/node_modules/
+frontend/.vite/
+frontend/tsconfig.tsbuildinfo
+frontend/*.tsbuildinfo
+# Le dossier compilé `frontend/dist/` est laissé versionné pour permettre un
+# lancement immédiat sans Node. Décommentez la ligne suivante si vous
+# reconstruisez systématiquement le front au déploiement :
+# frontend/dist/
+
+# --- Ancienne interface Jinja (remplacée par le SPA React) — ne pas publier ---
+# Supprimée du dépôt ; ignorée ici au cas où elle traînerait encore sur disque.
+static/
+templates/
+
+# --- Divers ---
+*.tmp
+*.corrupted.*
+.DS_Store
+Thumbs.db

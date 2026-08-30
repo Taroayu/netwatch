@@ -1,0 +1,11 @@
+# Contexte de build minimal
+frontend/node_modules
+frontend/dist
+data
+*.log
+__pycache__
+*.pyc
+.git
+.github
+tests
+.pytest_cache

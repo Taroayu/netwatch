@@ -1,0 +1,47 @@
+# ==============================================================================
+#  NetWatch Enterprise — dépendances
+#  Installation :  pip install -r requirements.txt
+# ==============================================================================
+
+# --- Serveur web / API --------------------------------------------------------
+Flask>=3.0.0
+# Serveur WSGI de production (multi-threads, diffuse le flux SSE). Utilisé
+# automatiquement quand DEBUG est désactivé ; repli sur le serveur Flask sinon.
+waitress>=3.0.0
+
+# --- Manipulation de trames réseau (ARP) --------------------------------------
+# Windows : nécessite Npcap (https://npcap.com) installé en mode
+#           « WinPcap API-compatible », et un terminal administrateur.
+# Linux   : nécessite libpcap et des privilèges root (ou CAP_NET_RAW).
+scapy>=2.5.0
+
+# --- Base de données OUI / fabricants -----------------------------------------
+# `netaddr` embarque le registre IEEE complet (≈ 35 000 OUI + 4 500 IAB) sous
+# forme de roue binaire : installation instantanée, résolution 100 % hors-ligne.
+# C'est le socle garanti du moteur d'identification matérielle.
+netaddr>=1.3.0
+
+# `mac-vendor-lookup` complète la couverture avec la base IEEE la plus fraîche
+# (mise en cache locale au premier lancement, nécessite un accès réseau unique).
+mac-vendor-lookup>=0.1.12
+
+# --- Confort console (couleurs sous Windows) ----------------------------------
+colorama>=0.4.6 ; sys_platform == "win32"
+
+
+# ==============================================================================
+#  OPTIONNEL — base OUI Wireshark (`manuf`)
+# ------------------------------------------------------------------------------
+#  NetWatch utilise `manuf` en priorité s'il est présent : ses libellés
+#  constructeurs sont plus lisibles que ceux du registre IEEE brut.
+#
+#  ⚠ `manuf` est distribué sous forme de source `setup.py` incompatible avec
+#    setuptools >= 80. Si vous souhaitez l'installer :
+#
+#        pip install "setuptools<80" wheel
+#        pip install manuf --no-build-isolation
+#
+#  Son absence n'a AUCUNE conséquence fonctionnelle : `netaddr` prend le relais
+#  avec le même niveau de couverture.
+# ==============================================================================
+# manuf>=1.1.5

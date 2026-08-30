@@ -1,0 +1,33 @@
+# ==============================================================================
+#  NetWatch Enterprise — déploiement Docker Compose
+# ------------------------------------------------------------------------------
+#  Lancement :  docker compose up --build
+#
+#  • network_mode host : indispensable pour que Scapy voie le vrai segment L2
+#    (la découverte ARP n'a aucun sens depuis un réseau Docker isolé).
+#  • cap_add NET_RAW / NET_ADMIN : autorisent la capture et l'émission ARP.
+#  • Définissez NETWATCH_PASSWORD (sinon un mot de passe aléatoire est généré
+#    et affiché dans les logs du conteneur au démarrage).
+# ==============================================================================
+
+services:
+  netwatch:
+    build: .
+    image: netwatch-enterprise
+    container_name: netwatch
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    environment:
+      # - NETWATCH_PASSWORD=change-me
+      - NETWATCH_PORT=5000
+      # HTTPS (générez d'abord les certificats avec tools/generate_cert.py) :
+      # - NETWATCH_TLS_CERT=/app/data/cert.pem
+      # - NETWATCH_TLS_KEY=/app/data/key.pem
+    volumes:
+      - netwatch-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  netwatch-data:
